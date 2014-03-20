@@ -1,0 +1,561 @@
+<html>
+<head>
+<title>HOGgles: Visualizing Object Detection Features - MIT</title>
+<meta name="google-site-verification" content="NksNPfO4SApMtvU2rGHxr4DPan2Uy6Pz-rP9cA0k1mg" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.mlens-1.0.min.js"></script>
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-17813713-3']);
+_gaq.push(['_setDomainName', '.mit.edu']);
+_gaq.push(['_trackPageview']);
+
+_gaq.push(['t2._setAccount', 'UA-24450278-5']);
+_gaq.push(['t2._trackPageview']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+</script>
+
+<style>
+body
+{
+    font-family : Arial;
+	background-color : #EFEFEF;
+}
+.content
+{
+    width : 800px;
+    padding : 25px 50px;
+    margin : 25px auto;
+    background-color : #fff;
+    box-shadow: 0px 0px 10px #999;
+    border-radius: 15px; 
+}
+
+.contentblock
+{
+    width : 950px;
+    margin : 0 auto;
+    padding : 0;
+    border-spacing : 25px 0;
+}
+
+.contentblock td
+{
+    background-color : #fff;
+    padding : 25px 50px;
+    vertical-align : top;
+    box-shadow: 0px 0px 10px #999;
+    border-radius: 15px; 
+}
+
+a, a:visited
+{
+    color : blue;
+}
+
+#authors
+{
+    text-align : center;
+    margin-bottom : 20px;
+}
+
+#conference
+{
+    text-align : center;
+    margin-bottom : 20px;
+    font-style : italic;
+}
+
+#authors a 
+{
+    margin : 0 10px;
+}
+
+h1
+{
+    text-align : center;
+    font-family : Arial;
+    font-size : 30px;
+}
+
+code
+{
+	display : block;
+	padding : 10px;
+	margin : 10px 10px;
+}
+p code
+{
+    display : inline;
+    padding : 0;
+    margin : 0;
+}
+#teasers
+{
+    margin : 0 auto;    
+}
+
+#teasers td
+{
+    margin : 0 auto;
+    text-align : center;
+    padding : 5px;
+}
+
+#teasers img
+{
+    width : 250px; 
+}
+
+#results img
+{
+    width : 133px;
+}
+
+#seeintodark {
+    margin : 0 auto;
+}
+
+#sift 
+{
+    margin : 0 auto;
+}
+
+#sift img
+{
+    width : 250px;
+}
+
+.downloadpaper 
+{
+    padding-left : 20px;
+    float : right;
+    text-align : center;
+}
+
+.downloadpaper a 
+{
+    font-weight : bold;
+    text-align : center;
+}
+
+#demoframe
+{
+    border : 0;
+    padding : 0;
+    margin : 0;
+    width : 100%;
+    height : 340px;
+}
+
+#feedbackform
+{
+    border : 1px solid #ccc;
+    margin : 0 auto;
+    border-radius : 15px;
+}
+
+#eyeglass {
+    height : 530px;
+}
+
+#eyeglass #wrapper {
+    position: relative;
+    height: auto;
+    margin: 0 auto;
+    float: left;
+    width : 800px;
+}
+
+#mitnews
+{ 
+    font-weight : normal;
+    margin-top : 20px;
+    font-size : 14px;
+    width : 220px;
+}
+
+#mitnews a {
+    font-weight : normal;
+}
+</style>
+</head>
+
+<body>
+
+<div class="content">
+<h1>HOGgles: Visualizing Object Detection Features</h1>
+<p id="authors">
+<a href="http://mit.edu/vondrick">Carl Vondrick</a>
+<a href="http://people.csail.mit.edu/khosla/">Aditya Khosla</a>
+<a href="http://people.csail.mit.edu/tomasz/index.html">Tomasz Malisiewicz</a>
+<a href="http://web.mit.edu/torralba/www/">Antonio Torralba</a><br>
+Massachusetts Institute of Technology
+</p>
+
+<p id="conference">
+<a href="http://techtalks.tv/talks/hoggles-visualizing-object-detection-features/59386/">Oral presentation at ICCV 2013</a>
+</p>
+
+<div class="downloadpaper">
+<a href="iccv.pdf"><img src="papericon.png" width="200px"><br><br>Download Paper</a>
+<div id="mitnews">
+Read about it in the <a href="http://web.mit.edu/newsoffice/2013/teaching-computers-to-see-by-learning-to-see-like-computers-0919.html">MIT news</a>!<br>
+Download <a href="slides.pdf">slides</a> or <a href="http://techtalks.tv/talks/hoggles-visualizing-object-detection-features/59386/">watch</a>
+</div>
+</div>
+
+
+<p>We introduce algorithms to visualize feature spaces used by object detectors. The tools in this paper allow a human to put on "HOG goggles" and perceive the visual world as a HOG based object detector sees it.</p>
+
+<p>Check out this page for a few of our experiments, and read <a href="iccv.pdf">our paper</a> for full details. Code is available to make your own visualizations.</p>
+
+<p><strong>Quick Jump:</strong></p>
+
+<ol>
+    <li><a href="#code">Code</a></li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#duck">Why did my detector fail?</a></li>
+    <li><a href="#falsepositives">Visualizing Top Detections</a></li>
+    <li><a href="#whatdoeshogsee">What does HOG see?</a></li>
+    <li><a href="#eyeglass">Eye Glass</a></li>
+    <li><a href="#models">Visualizing Learned Models</a></li>
+    <li><a href="#color">Recovering Color</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#hoggles">HOGgles</a></li>
+</ol>
+
+<br clear="all">
+
+</div>
+
+<table class="contentblock">
+<tr>
+<td style="width:300px;">
+
+<h2>Code</h2>
+<p>We have released a fast and simple MATLAB function <code>invertHOG()</code> to invert HOG features. Usage is easy:</p>
+<code>&gt;&gt; feat = features(im, 8);<br>
+&gt;&gt; <strong>ihog = invertHOG(feat);</strong><br>
+&gt;&gt; imagesc(ihog); 
+</code>
+<p>The above should invert any reasonably sized HOG feature in under a second on a modern desktop machine.</p>
+
+<p>The code can be <a href="https://github.com/CSAILVision/ihog/archive/master.tar.gz">downloaded here</a> or you can checkout our <a href="https://github.com/CSAILVision/ihog">Github repository</a>. Installation is simple, but remember to read the <a href="https://github.com/CSAILVision/ihog/blob/master/README.md#ihog-inverting-histograms-of-oriented-gradients">README</a>.</p>
+
+</td>
+<td style="width:600px;">
+
+<h2>Demo</h2>
+<iframe src="http://saturday.csail.mit.edu:8080/?embed=1" id="demoframe"></iframe>
+
+</td>
+</tr>
+</table>
+
+<div class="content" id="overview">
+
+<h2>Overview</h2>
+
+<p>This project introduces the tools to visualize feature spaces. Since most feature spaces are too high dimensional for humans
+to directly inspect, we present algorithms to invert feature descriptors back to a natural image. We found that these
+inversions provide an accurate and intuitive visualization of feature descriptors commonly used in object
+detection. Below, we show an example of the visualization for HOG:
+
+<table id="teasers">
+<thead>
+<tr>
+<th>HOG [1]</th>
+<th>Inverse (Us)</th>
+<th>Original</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="results/teaser-hog.jpg"></td>
+<td><img src="results/teaser-inverse.jpg"></td>
+<td><img src="results/teaser-original.jpg"></td>
+</tr>
+<tr>
+<td><img src="results/teaser2-hog.jpg"></td>
+<td><img src="results/teaser2-inverse.jpg"></td>
+<td><img src="results/teaser2-original.jpg"></td>
+</tr>
+<tr>
+<td><img src="results/teaser3-hog.jpg"></td>
+<td><img src="results/teaser3-inverse.jpg"></td>
+<td><img src="results/teaser3-original.jpg"></td>
+</tr>
+<tr>
+<td><img src="results/teaser4-hog.jpg"></td>
+<td><img src="results/teaser4-inverse.jpg"></td>
+<td><img src="results/teaser4-original.jpg"></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+<div class="content" id="duck">
+
+<h2>Why did my detector fail?</h2>
+
+<p>Below we show a high scoring detection from an object detector with HOG features
+and a linear SVM classifier trained on PASCAL. Why does our detector 
+think that sea water looks like a car?</p>
+
+<div style="text-align:center;">
+<img src="results/000821_annotated.jpg.png">
+</div>
+
+<p>Our visualizations offer an explanation. Below we show the output from our visualization
+on the HOG features for the false car detection. This visualization reveals that, while there are clearly 
+no cars in the original image, there is a car hiding in the HOG descriptor.</p>
+
+<div style="text-align:center;">
+<img src="results/teaser_vis.png" width="500">
+</div>
+
+<p>HOG features see a slightly different visual world than what humans see, and by visualizing this space,
+we can gain a more intuitive understanding of our object detectors. </p>
+
+</div>
+
+<div class="content" id="falsepositives">
+
+<h2>Visualizing Top Detections</h2>
+
+<p>We have visualized some high scoring detections from the deformable parts model. Can you guess which are false alarms? Click on the images below to reveal the corresponding RGB patch. You might be surprised!</p>
+
+<div id="falsepositives2">
+</div>
+
+
+</div>
+
+<script>
+var preload = new Array();
+$(document).ready(function() {
+function hoggles(category, label, height, images) {
+    
+    var container = $("<div style='text-align:center; padding-bottom : 20px;'></div>"); 
+    container.appendTo("#falsepositives2");
+
+    for (var i = 0; i < images.length; i++) {
+        var im = $("<img src='" + category + "-fp/ihog/" + images[i] + "' height='" + height + "px' class='ihog'> ");
+        container.append(im);
+
+        var index = preload.length;
+        preload[index] = new Image();
+        preload[index].src = category + '-fp/original/' + images[i];
+
+        (function (j) {
+            im.css('padding', '3px');
+            im.css('cursor', 'pointer');
+            im.click(function() {
+                $(this).width($(this).width());
+                if ($(this).hasClass("ihog")) {
+                    $(this).attr('src', category + '-fp/original/' + images[j]);
+                    $(this).removeClass("ihog");
+                } 
+                else 
+                {
+                    $(this).attr('src', category + '-fp/ihog/' + images[j]);
+                    $(this).addClass("ihog");
+                }
+            });
+            im.mouseout(function() {
+                $(this).attr('src', category + '-fp/ihog/' + images[j]);
+                $(this).addClass("ihog");
+            });
+        })(i);
+    }
+
+    container.append("<br><strong style='margin-top : 10px;'>" + label + "</strong>");
+};
+
+var persons = [ "0000004.jpg", "0000018.jpg", "0000019.jpg", "0000039.jpg", "0000107.jpg", "0000111.jpg", "0000126.jpg", "0000134.jpg", "0000169.jpg", "0000118.jpg", "0000216.jpg"];
+
+var chairs = ["0000045.jpg", "0000103.jpg", "0000104.jpg", "0000116.jpg", "0000117.jpg", "0000123.jpg", "0000090.jpg"];
+
+var cars = ["0000238.jpg", "0000390.jpg", "0000399.jpg", "0000643.jpg", "0000398.jpg", "0000427.jpg", "0000616.jpg"];
+
+hoggles("person", "Person", 135, persons);
+hoggles("chair", "Chair", 150, chairs);
+hoggles("car", "Car", 100, cars);
+
+});
+</script>
+
+<div class="content" id="whatdoeshogsee">
+<h2>What does HOG see?</h2>
+<p>HOG inversion reveals the world that object detectors see. The left shows
+a man standing in a dark room. If we compute HOG on this image and invert it, the previously
+dark scene behind the man emerges. Notice the wall structure, the lamp post, and
+the chair in the bottom right hand corner.</p>
+<table style="margin : 0 auto;"><tr>
+<td style="padding-right:30px;"><img src="results/seeintodark_original.jpg" height="500"></td>
+<td><img src="results/seeintodark_inverse.jpg" height="500"></td>
+</tr>
+<tr>
+<td style="text-align:center; padding : 10px;">Human Vision</td>
+<td style="text-align:center; padding : 10px;">HOG Vision</td>
+</tr>
+</table>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+    $("#eyeglassimg").mlens(
+    {
+        imgSrc: $("#eyeglassimg").attr("data-big"),   // path of the hi-res version of the image
+        lensShape: "circle",                // shape of the lens (circle or square)
+        lensSize: 150,                  // size of the lens (in px)
+        borderSize: 1,                  // size of the lens border (in px)
+        borderColor: "#fff",                // color of the lens border (#hex)
+        borderRadius: 0                 // border radius (optional, only if the shape is square)
+    });
+});
+</script>
+
+
+<div class="content" id="eyeglass">
+
+<h2>Eye Glass</h2>
+
+<p>Move your mouse around the HOG glyph below to reveal our visualization.</p>
+
+<div id="wrapper">
+<img id="eyeglassimg" src="glyph.jpg" alt="green monster graffiti by Kotzian" data-big="ihog.jpg" />
+</div>
+
+</div>
+
+<div class="content" id="models">
+<h2>Visualizing Learned Models</h2>
+<p>Our inverses allow us to visualize learned object models. Below we show a few deformable parts models. Notice
+the structure that emerges with our visualization.</p>
+
+<div style="text-align:center;">
+<img height="100" src="models/car_4_parts.jpg">
+<img height="100" src="models/person_2_parts.jpg">
+<img height="100" src="models/bottle_6_parts.jpg">
+<img height="100" src="models/bicycle_2_parts.jpg">
+<img height="100" src="models/motorbike_2_parts.jpg">
+<img height="100" src="models/pottedplant_4_parts.jpg">
+<img height="100" src="models/train_4_parts.jpg">
+<img height="100" src="models/bus_2_parts.jpg">
+<img height="100" src="models/horse_2_parts.jpg">
+<img height="100" src="models/tvmonitor_4_parts.jpg">
+<img height="100" src="models/chair_4_parts.jpg">
+</div>
+
+<p>First row: car, person, bottle, bicycle, motorbike, potted plant. Second row: train, bus, horse, television, chair.</p>
+
+</div>
+
+<div class="content" id="color">
+<h2>Recovering Color</h2>
+<p>So far we have only inverted to grayscale reconstructions. Can we recover color images as well?</p>
+
+<div style="text-align:center;">
+<img src="color/2010_001803.jpg" style="width : 800px;"><br><br>
+<img src="color/2008_002910.jpg" style="width : 800px;">
+</div>
+
+<p>For more color inversions, see the <a href="color/">Does HOG Capture Color?</a> page.</p>
+</div>
+
+
+<div class="content" id="videos">
+
+<h2>Videos</h2>
+
+<div style="text-align:center;">
+
+<table style="margin:0 auto;"><tr>
+<td>
+<iframe width="400" height="280" src="http://www.youtube.com/embed/iLPI4x4pKVY?rel=0" frameborder="0" allowfullscreen></iframe>
+</td>
+<td>
+<iframe width="400" height="280" src="http://www.youtube.com/embed/y7l_TApARGc?rel=0" frameborder="0" allowfullscreen></iframe>
+</td>
+</tr></table>
+
+</div>
+
+</div>
+
+<div class="content" id="hoggles">
+
+<h2>HOGgles</h2>
+
+<p>If you come visit our lab, be sure to check out our interactive HOGgles demo!</p>
+
+<table style="margin : 0 auto;"><tr>
+<td style="padding-right : 25px;">
+<img src="results/hoggles1.jpeg">
+</td>
+<td style="padding-left : 25px;">
+<img src="results/hoggles2.jpeg">
+</td></tr></table>
+
+<p>Participants inside the black box can only see our HOG visualization of the
+outside world as they attempt to move around the environment. How well can you see in HOG space?</p>
+
+</div>
+<div class="content" id="references">
+
+<h2>References</h2>
+
+<p>If you use this tool in your research, please cite our ICCV 2013 paper:</p>
+
+<p>C. Vondrick, A. Khosla, T. Malisiewicz, A. Torralba. "HOGgles: Visualizing Object Detection Features" <em>International Conference on Computer Vision</em> (ICCV), Sydney, Australia, December 2013.</p>
+
+<code>
+@article{vondrick2013hoggles,<br>
+&nbsp;&nbsp;title={{HOGgles: Visualizing Object Detection Features}},<br>
+&nbsp;&nbsp;author={Vondrick, C. and Khosla, A. and Malisiewicz, T. and Torralba, A.},<br>
+&nbsp;&nbsp;journal={ICCV},<br>
+&nbsp;&nbsp;year={2013}<br>
+}
+</code>
+
+</div>
+
+<div class="content">
+
+<h2>Acknowledgments</h2>
+
+<p>We wish to thank Hamed Pirsiavash, Joseph Lim, and the entire MIT
+CSAIL computer vision group for their helpful comments and suggestions
+that helped guide this project.</p>
+
+<h2>References</h2>
+<ol>
+<li>N. Dalal and B. Triggs. Histograms of oriented gradients for human detection. In CVPR, 2005.</li>
+<li>P. Weinzaepfel, H. Jegou, and P. Perez. Reconstructing an image from its local descriptors. In CVPR, 2011.</li>
+<li>E. d'Angelo, A. Alahi, and P. Vandergheynst. Beyond Bits: Reconstructing Images from Local Binary Descriptors. ICPR 2012.</li>
+</ol>
+
+</div>
+
+<div class="content">
+<blockquote>
+"The real voyage of discovery consists not in seeking new landscapes but
+in having new eyes." <br>
+&mdash; Marcel Proust
+</blockquote>
+</div>
+
+</body>
+</html>
