@@ -196,16 +196,17 @@ p code
 </p>
 
 <div class="downloadpaper">
-<a href="iccv.pdf"><img src="papericon.png" width="200px"><br><br>Download Paper</a>
+<a href="final.pdf"><img src="papericon.png" width="200px"><br><br>View Report</a>
 </div>
 
+<p>Our task is to detect specific event (mostly human involved) in a video based on spatial-temporal features of its visual content.</p>
 
-<p>We introduce algorithms to visualize feature spaces used by object detectors. The tools in this paper allow a human to put on "HOG goggles" and perceive the visual world as a HOG based object detector sees it.</p>
+<p>Human involved events are major events and usually the events we care most in movies, web videos, surveillance video, etc. Event detection for video is an important problem in many applications, especially nowadays video become one of the most important information resource and watching videos become part of our everyday life. For example this technology can help us make index of key frames, which can be used by user to do content-based browsing (fast-forward to the moment they want to watch)[1].</p>
 
-<p>Check out this page for a few of our experiments, and read <a href="iccv.pdf">our paper</a> for full details. Code is available to make your own visualizations.</p>
+<p> You can read the following part of this page or read our <a href="final.pdf">report</a> for detail. </p>
 
+<!--
 <p><strong>Quick Jump:</strong></p>
-
 <ol>
     <li><a href="#code">Code</a></li>
     <li><a href="#overview">Overview</a></li>
@@ -218,11 +219,11 @@ p code
     <li><a href="#videos">Videos</a></li>
     <li><a href="#hoggles">HOGgles</a></li>
 </ol>
-
+-->
 <br clear="all">
 
 </div>
-
+<!--
 <table class="contentblock">
 <tr>
 <td style="width:300px;">
@@ -246,7 +247,8 @@ p code
 </td>
 </tr>
 </table>
-
+-->
+<!--
 <div class="content" id="overview">
 
 <h2>Overview</h2>
@@ -289,8 +291,8 @@ detection. Below, we show an example of the visualization for HOG:
 </table>
 
 </div>
-
-
+-->
+<!--
 <div class="content" id="duck">
 
 <h2>Why did my detector fail?</h2>
@@ -315,118 +317,9 @@ no cars in the original image, there is a car hiding in the HOG descriptor.</p>
 we can gain a more intuitive understanding of our object detectors. </p>
 
 </div>
+-->
 
-<div class="content" id="falsepositives">
-
-<h2>Visualizing Top Detections</h2>
-
-<p>We have visualized some high scoring detections from the deformable parts model. Can you guess which are false alarms? Click on the images below to reveal the corresponding RGB patch. You might be surprised!</p>
-
-<div id="falsepositives2">
-</div>
-
-
-</div>
-
-<script>
-var preload = new Array();
-$(document).ready(function() {
-function hoggles(category, label, height, images) {
-    
-    var container = $("<div style='text-align:center; padding-bottom : 20px;'></div>"); 
-    container.appendTo("#falsepositives2");
-
-    for (var i = 0; i < images.length; i++) {
-        var im = $("<img src='" + category + "-fp/ihog/" + images[i] + "' height='" + height + "px' class='ihog'> ");
-        container.append(im);
-
-        var index = preload.length;
-        preload[index] = new Image();
-        preload[index].src = category + '-fp/original/' + images[i];
-
-        (function (j) {
-            im.css('padding', '3px');
-            im.css('cursor', 'pointer');
-            im.click(function() {
-                $(this).width($(this).width());
-                if ($(this).hasClass("ihog")) {
-                    $(this).attr('src', category + '-fp/original/' + images[j]);
-                    $(this).removeClass("ihog");
-                } 
-                else 
-                {
-                    $(this).attr('src', category + '-fp/ihog/' + images[j]);
-                    $(this).addClass("ihog");
-                }
-            });
-            im.mouseout(function() {
-                $(this).attr('src', category + '-fp/ihog/' + images[j]);
-                $(this).addClass("ihog");
-            });
-        })(i);
-    }
-
-    container.append("<br><strong style='margin-top : 10px;'>" + label + "</strong>");
-};
-
-var persons = [ "0000004.jpg", "0000018.jpg", "0000019.jpg", "0000039.jpg", "0000107.jpg", "0000111.jpg", "0000126.jpg", "0000134.jpg", "0000169.jpg", "0000118.jpg", "0000216.jpg"];
-
-var chairs = ["0000045.jpg", "0000103.jpg", "0000104.jpg", "0000116.jpg", "0000117.jpg", "0000123.jpg", "0000090.jpg"];
-
-var cars = ["0000238.jpg", "0000390.jpg", "0000399.jpg", "0000643.jpg", "0000398.jpg", "0000427.jpg", "0000616.jpg"];
-
-hoggles("person", "Person", 135, persons);
-hoggles("chair", "Chair", 150, chairs);
-hoggles("car", "Car", 100, cars);
-
-});
-</script>
-
-<div class="content" id="whatdoeshogsee">
-<h2>What does HOG see?</h2>
-<p>HOG inversion reveals the world that object detectors see. The left shows
-a man standing in a dark room. If we compute HOG on this image and invert it, the previously
-dark scene behind the man emerges. Notice the wall structure, the lamp post, and
-the chair in the bottom right hand corner.</p>
-<table style="margin : 0 auto;"><tr>
-<td style="padding-right:30px;"><img src="results/seeintodark_original.jpg" height="500"></td>
-<td><img src="results/seeintodark_inverse.jpg" height="500"></td>
-</tr>
-<tr>
-<td style="text-align:center; padding : 10px;">Human Vision</td>
-<td style="text-align:center; padding : 10px;">HOG Vision</td>
-</tr>
-</table>
-</div>
-
-<script type="text/javascript">
-$(document).ready(function()
-{
-    $("#eyeglassimg").mlens(
-    {
-        imgSrc: $("#eyeglassimg").attr("data-big"),   // path of the hi-res version of the image
-        lensShape: "circle",                // shape of the lens (circle or square)
-        lensSize: 150,                  // size of the lens (in px)
-        borderSize: 1,                  // size of the lens border (in px)
-        borderColor: "#fff",                // color of the lens border (#hex)
-        borderRadius: 0                 // border radius (optional, only if the shape is square)
-    });
-});
-</script>
-
-
-<div class="content" id="eyeglass">
-
-<h2>Eye Glass</h2>
-
-<p>Move your mouse around the HOG glyph below to reveal our visualization.</p>
-
-<div id="wrapper">
-<img id="eyeglassimg" src="glyph.jpg" alt="green monster graffiti by Kotzian" data-big="ihog.jpg" />
-</div>
-
-</div>
-
+<!--
 <div class="content" id="models">
 <h2>Visualizing Learned Models</h2>
 <p>Our inverses allow us to visualize learned object models. Below we show a few deformable parts models. Notice
@@ -449,100 +342,123 @@ the structure that emerges with our visualization.</p>
 <p>First row: car, person, bottle, bicycle, motorbike, potted plant. Second row: train, bus, horse, television, chair.</p>
 
 </div>
-
-<div class="content" id="color">
-<h2>Recovering Color</h2>
-<p>So far we have only inverted to grayscale reconstructions. Can we recover color images as well?</p>
-
-<div style="text-align:center;">
-<img src="color/2010_001803.jpg" style="width : 800px;"><br><br>
-<img src="color/2008_002910.jpg" style="width : 800px;">
-</div>
-
-<p>For more color inversions, see the <a href="color/">Does HOG Capture Color?</a> page.</p>
-</div>
-
-
-<div class="content" id="videos">
-
-<h2>Videos</h2>
-
-<div style="text-align:center;">
-
-<table style="margin:0 auto;"><tr>
-<td>
-<iframe width="400" height="280" src="http://www.youtube.com/embed/iLPI4x4pKVY?rel=0" frameborder="0" allowfullscreen></iframe>
-</td>
-<td>
-<iframe width="400" height="280" src="http://www.youtube.com/embed/y7l_TApARGc?rel=0" frameborder="0" allowfullscreen></iframe>
-</td>
-</tr></table>
-
-</div>
-
-</div>
-
-<div class="content" id="hoggles">
-
-<h2>HOGgles</h2>
-
-<p>If you come visit our lab, be sure to check out our interactive HOGgles demo!</p>
-
-<table style="margin : 0 auto;"><tr>
-<td style="padding-right : 25px;">
-<img src="results/hoggles1.jpeg">
-</td>
-<td style="padding-left : 25px;">
-<img src="results/hoggles2.jpeg">
-</td></tr></table>
-
-<p>Participants inside the black box can only see our HOG visualization of the
-outside world as they attempt to move around the environment. How well can you see in HOG space?</p>
-
-</div>
-<div class="content" id="references">
-
-<h2>References</h2>
-
-<p>If you use this tool in your research, please cite our ICCV 2013 paper:</p>
-
-<p>C. Vondrick, A. Khosla, T. Malisiewicz, A. Torralba. "HOGgles: Visualizing Object Detection Features" <em>International Conference on Computer Vision</em> (ICCV), Sydney, Australia, December 2013.</p>
-
-<code>
-@article{vondrick2013hoggles,<br>
-&nbsp;&nbsp;title={{HOGgles: Visualizing Object Detection Features}},<br>
-&nbsp;&nbsp;author={Vondrick, C. and Khosla, A. and Malisiewicz, T. and Torralba, A.},<br>
-&nbsp;&nbsp;journal={ICCV},<br>
-&nbsp;&nbsp;year={2013}<br>
-}
-</code>
-
-</div>
+-->
 
 <div class="content">
 
-<h2>Acknowledgments</h2>
-
-<p>We wish to thank Hamed Pirsiavash, Joseph Lim, and the entire MIT
-CSAIL computer vision group for their helpful comments and suggestions
-that helped guide this project.</p>
-
 <h2>References</h2>
 <ol>
-<li>N. Dalal and B. Triggs. Histograms of oriented gradients for human detection. In CVPR, 2005.</li>
-<li>P. Weinzaepfel, H. Jegou, and P. Perez. Reconstructing an image from its local descriptors. In CVPR, 2011.</li>
-<li>E. d'Angelo, A. Alahi, and P. Vandergheynst. Beyond Bits: Reconstructing Images from Local Binary Descriptors. ICPR 2012.</li>
+<li> Laptev, I., Marszalek, M., Schmid, C., & Rozenfeld, B. (2008, June). Learning realistic human actions from movies. In <em>Computer Vision and Pattern Recognition</em>, 2008. CVPR 2008. <em>IEEE Conference</em> on (pp. 1-8). IEEE.</li>
 </ol>
 
 </div>
 
-<div class="content">
-<blockquote>
-"The real voyage of discovery consists not in seeking new landscapes but
-in having new eyes." <br>
-&mdash; Marcel Proust
-</blockquote>
-</div>
 
+<div id="toolBackTo" class="back-to" style="display: none">
+<a class="back-top" href="#" title="Back-to-top">Back to top</a>
+</div>
+<script>
+    $(function(){
+    var bt = $('#toolBackTo');
+    var hl = $.browser.webkit ? $('body')[0] : $('html')[0];
+
+    $('.back-top').click( function() {
+        var $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
+        $body.animate( {
+            scrollTop: 0
+        }, 1000);
+        return false;
+    });
+
+    $(window).scroll( function() { 
+        var st = hl.scrollTop;
+        show = (st>30);
+        if( show ){
+            bt.show("slow");
+        }else{
+            bt.hide("slow");
+        }
+    });
+});
+</script>
+
+
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-7870337-1']);
+    _gaq.push(['_setDomainName', 'none']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+
+<!-- Start Quantcast tag -->
+<script type="text/javascript">
+    _qoptions={
+        qacct:"p-0dYLvhSGGqUWo"
+    };
+</script>
+<script type="text/javascript" src="//edge.quantserve.com/quant.js"></script>
+<noscript>
+<img src="//pixel.quantserve.com/pixel/p-0dYLvhSGGqUWo.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+</noscript>
+<!-- End Quantcast tag -->
+
+<script>
+
+    (function(jQuery) {
+        try {
+            if (jQuery) {
+                jQuery('div.blog-social div.fb-like').attr('class', 'blog-social-item blog-fb-like');
+                jQuery('#commentArea iframe').css('min-height', '410px');
+                if (jQuery('.product-button').length > 0){
+                    jQuery(document).ready(function(){
+                        jQuery('.product-button').parent().each(function(index, product){
+                            if(jQuery(product).attr('target') == 'paypal'){
+                                if (!jQuery(product).find('> [name="bn"]').length){
+                                    jQuery('<input>').attr({
+                                        type: 'hidden',
+                                        name: 'bn',
+                                        value: 'DragAndDropBuil_SP_EC'
+                                    }).appendTo(product);
+                                }
+                            }
+                        });
+                        jQuery.ajax({
+                            type: "GET",
+                            url: "/ajax/apps/stats.php?stat=sites.commerce.legacy.visit"
+                        });
+                    });
+                    jQuery('.product-button').click(function() {
+                        var val = jQuery(this.form).serialize();
+                        jQuery.ajax({
+                            type: "POST",
+                            url: "/ajax/apps/stats.php?stat=sites.commerce.legacy.addcart",
+                            data: { values: val, host: window.location.host }
+                        });
+                    });
+                }
+            }
+            else {
+                // Prototype
+                $$('div.blog-social div.fb-like').each(function(div) {
+                    div.className = 'blog-social-item blog-fb-like';
+                });
+                $$('#commentArea iframe').each(function(iframe) {
+                    iframe.style.minHeight = '410px';
+                });
+            }
+        }
+        catch(ex) {}
+    })(window._W && _W.jQuery);
+
+</script>
 </body>
 </html>
