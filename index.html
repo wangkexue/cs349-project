@@ -451,33 +451,42 @@ the structure that emerges with our visualization.</p>
 
 </div>
 
-
 <div id="toolBackTo" class="back-to" style="display: none">
-<a class="back-top" href="#" title="Back-to-top">Back to top</a>
+<a class="back-top" href="#" title="Back to Top">Back to Top</a>
 </div>
-<script>
-    $(function(){
-    var bt = $('#toolBackTo');
-    var hl = $.browser.webkit ? $('body')[0] : $('html')[0];
 
-    $('.back-top').click( function() {
-        var $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
-        $body.animate( {
-            scrollTop: 0
-        }, 1000);
-        return false;
-    });
-
-    $(window).scroll( function() { 
-        var st = hl.scrollTop;
-        show = (st>30);
-        if( show ){
-            bt.show("slow");
-        }else{
-            bt.hide("slow");
-        }
-    });
-});
+<script type="text/javascript">
+var glide =new function(){
+    function $id(id){return document.getElementById(id);};
+    this.layerGlide=function(hSlider,oSlider,sSingleSize,fSpeed,point){
+        var interval,oslideRange;
+        var time=1; 
+        //var speed = 0.1;
+        var speed = fSpeed; 
+        var setValLeft=function(s){
+            return function(){
+                oslideRange = Math.abs(parseInt($id(oSlider).style[point]));    
+                $id(oSlider).style[point] =-Math.floor(oslideRange+(parseInt(s*sSingleSize) - oslideRange)*speed) +'px';        
+                if(oslideRange==[sSingleSize * s]){
+                    clearInterval(interval);
+                    //a=s;
+                }
+            }
+        };
+        
+        $id(hSlider).onmouseover = function(){
+                clearInterval(interval);
+                interval = setInterval(setValLeft(1),time);     
+            }
+        
+        $id(hSlider).onmouseout = function(){
+                clearInterval(interval);
+                interval = setInterval(setValLeft(0),time);
+            }
+    }
+}
+glide.layerGlide('slide-show','show',278,0.1,'left');
+glide.layerGlide('slide-show2','show2',270,0.1,'left');
 </script>
 
 
