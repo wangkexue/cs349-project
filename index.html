@@ -223,6 +223,16 @@ p code
 <br clear="all">
 
 </div>
+
+<div class="content">
+<h2> Method </h2>
+<p> The features are high-dimensional(such as 162 dimensions) spatial-time points. Since the temporal and spatial properties vary between videos, the number of feature points we can obtain is also different. So first we should project all the feature vector of different videos into same dimension. We use k-means to learn a dictionary with all the points. Then calculate histogram of projected points in a video as its feature vector. Finally we train SVM classifier for each action, and use one-vs-all strategy for prediction.</p>
+</div>
+
+<div class="content">
+<h2> Experiments </h2>
+
+</div>
 <!--
 <table class="contentblock">
 <tr>
