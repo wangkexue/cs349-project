@@ -13,7 +13,65 @@
 We use trackelet feature[2]. The features are 256-dimensional spatial-time interest points(STIP) based on HOG and HOF(see report for detail). Since video's temporal and spatial properties vary between each other, the number of STIP extracted from each video also varies. The first thing is to project all the feature vector of different videos into same space. We clustering these spatial-temporal interest points to learn a dictionary (finally get 891 vocabularies or bases). Then calculate histogram of projected points in a video as its feature vector. We use these feature vectors to train SVM classifier for each action. Prediction is made by one-vs-all strategy. 
 \section{Experiments}
 The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). We trained SVM with different kernels and variables, and linear model achieved the best performance, 86.1\% accuracy on test set. Below is the confusion matrix. That shows good features' importance in classification, even simple classifier like linear SVM can work well with them. 
+\begin{table}
+\caption{Confusion matrix of SVM with RBF kernel (78\% accuracy)}
+\begin{center}
+\begin{tabular}{c|cccccc}\hline
+&boxing&handclapping &handwaving &jogging &running &walking\\ \hline
+boxing&7& 4& 0& 0& 0& 1\\
+handclapping&1& 11& 0& 0& 0& 0\\
+handwaving&0& 1& 11&0 &0 &0 \\
+jogging&0& 1& 0&7 &3 &1 \\
+running&0& 1&0 &2 &9 &0 \\
+walking&0&1 &0 &0 &0 &11 \\ \hline
+\end{tabular}
+\end{center}
+\end{table} 
 
+\begin{table}
+\caption{Confusion matrix of linear SVM (86.1\% accuracy)}
+\begin{center}
+\begin{tabular}{c|cccccc}\hline
+&boxing&handclapping &handwaving &jogging &running &walking\\ \hline
+boxing&10& 1& 0& 0& 0& 1\\
+handclapping&0& 12& 0& 0& 0& 0\\
+handwaving&1& 0& 11&0 &0 &0 \\
+jogging&1& 0& 0&9 &2 &0 \\
+running&1& 0&0 &2 &9 &0 \\
+walking&1&0 &0 &0 &0 &11 \\ \hline
+\end{tabular}
+\end{center}
+\end{table} 
+
+\begin{table}
+\caption{Confusion matrix of SVM with polynomial kernel(72.2\% accuracy)}
+\begin{center}
+\begin{tabular}{c|cccccc}\hline
+&boxing&handclapping &handwaving &jogging &running &walking\\ \hline
+boxing&4& 8& 0& 0& 0& 0\\
+handclapping&0& 12& 0& 0& 0& 0\\
+handwaving&0& 1& 11&0 &0 &0 \\
+jogging&0& 1& 0&6 &5 &0 \\
+running&0& 1&0&2 &9 &0 \\
+walking&0&2 &0 &0 &0 &10 \\ \hline
+\end{tabular}
+\end{center}
+\end{table} 
+
+\begin{table}
+\caption{Confusion matrix of SVM with sigmoid kernel(75\% accuracy)}
+\begin{center}
+\begin{tabular}{c|cccccc}\hline
+&boxing&handclapping &handwaving &jogging &running &walking\\ \hline
+boxing&5& 6& 0& 0& 0& 1\\
+handclapping&1& 11& 0& 0& 0& 0\\
+handwaving&0& 1& 11&0 &0 &0 \\
+jogging&0& 1& 0&7 &4 &0 \\
+running&0& 1&0&2 &9 &0 \\
+walking&0&1 &0 &0 &0 &11 \\ \hline
+\end{tabular}
+\end{center}
+\end{table} 
 \section{Conclusion and Discussion}
 
 \end{document}
