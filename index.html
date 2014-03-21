@@ -167,17 +167,22 @@ p code
     border-radius : 15px;
 }
 
-#eyeglass {
-    height : 530px;
+.conf-mat table {
+  border-spacing: 0.5rem;
+}
+.conf-mat td {
+  padding: 0.5rem;
+  background: hsl(200, 99%, 50%);
 }
 
-#eyeglass #wrapper {
-    position: relative;
-    height: auto;
-    margin: 0 auto;
-    float: left;
-    width : 800px;
-}
+.conf-mat .header {background: #ffffff; font-weight: bold}
+.conf-mat .td11 { background: hsl(99, 98%, 51%); }
+.conf-mat .td10 { background: hsl(103, 88%, 47%); }
+.conf-mat .td12 { background: hsl(130, 91%, 41%); }
+.conf-mat .td9 { background: hsl(150, 100%, 50%); }
+.td3 { background: hsl(170, 70%, 50%); }
+.conf-mat .td2 { background: hsl(180, 80%, 50%); }
+.conf-mat .td1 { background: hsl(190, 90%, 50%); }
 
 </style>
 </head>
@@ -201,7 +206,7 @@ p code
 
 <p>Our task is to detect specific event (mostly human involved) in a video based on spatial-temporal features of its visual content.</p>
 
-<p>Human involved events are major events and usually the events we care most in movies, web videos, surveillance video, etc. Event detection for video is an important problem in many applications, especially nowadays video become one of the most important information resource and watching videos become part of our everyday life. For example this technology can help us make index of key frames, which can be used by user to do content-based browsing (fast-forward to the moment they want to watch)[1].</p>
+<p>Human involved events are major events and usually the events we care most in movies, web videos, surveillance video, etc. Event detection for video is an important problem in many applications, especially nowadays video become one of the most important information resource and watching videos become part of our everyday life. For example this technology can help us make index of key frames, which can be used by user to do content-based browsing (fast-forward to the moment they want to watch) [1].</p>
 
 <p> You can read the following part of this page or read our <a href="final.pdf">report</a> for detail. </p>
 
@@ -240,7 +245,73 @@ p code
 <div class="content">
 <h2> Experiments </h2>
 <p> The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). We trained SVM with different kernels and variables, and linear model achieved the best performance, 86.1% accuracy on test set. Below is the confusion matrix. That shows good features' importance in classification, even simple classifier like linear SVM can work well with them. </p>
-<center> </center>
+<center>
+<table class="conf-mat">
+    <tr> 
+        <th> </th>
+        <th>box </th>
+        <th> handclap </th>
+        <th> handwave </th>
+        <th> joggling </th>
+        <th> running </th>
+        <th> walking </th> 
+    </tr>
+    <tr>
+    <td class="header"> boxing</td>
+    <td class="td10"> 10 </td>
+    <td class="td1"> 1 </td>
+    <td> 0 </td>
+    <td> 0 </td>
+    <td> 0 </td>
+    <td class="td1"> 1 </td> 
+    </tr>
+    <tr>
+    <td class="header"> handclapping</td>
+    <td> 0</td>
+    <td class="td12"> 12</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td> 0</td> 
+    </tr>
+    <tr>
+    <td class="header"> handwaving</td>
+    <td class="td1"> 1</td>
+    <td> 0</td>
+    <td class="td11"> 11</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td> 0</td> 
+    </tr>
+    <tr>
+    <td class="header"> joggling</td>
+    <td class="td1"> 1</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td class="td9"> 9</td>
+    <td class="td2"> 2</td>
+    <td> 0</td> 
+    </tr>
+    <tr>
+    <td class="header"> running </td>
+    <td class="td1"> 1</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td class="td2"> 2</td>
+    <td class="td9"> 9</td>
+    <td> 0</td> 
+    </tr>
+    <tr>
+    <td class="header"> walking </td>
+    <td class="td1"> 1</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td> 0</td>
+    <td class="td11"> 11</td> 
+    </tr>
+</table>
+</center>
 </div>
 <!--
 <table class="contentblock">
