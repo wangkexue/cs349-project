@@ -226,18 +226,20 @@ p code
 
 <div class="content">
 <h2> Method </h2>
-<table> 
+<table align="center"> 
     <tr>
-    <td> <img src="f1.png"  height="65%" width="65%"> </td>
-    <td> </td> 
+    <td align="right"> <img src="f1.png"  height="65%" width="65%"> </td>
+    <td align="left"> <img src="f2.png" height="65%" width="65%"> </td> 
     </tr>
 </table>
-<p> We use trackelet feature[2]. The features are high-dimensional(such as 162 dimensions) spatial-time points. Since the temporal and spatial properties vary between videos, the number of feature points we can obtain is also different. So first we should project all the feature vector of different videos into same dimension. We clustering these spatial-temporal interest points to learn a dictionary. Then calculate histogram of projected points in a video as its feature vector. We use these feature vectors to train SVM classifier for each action. Prediction is made by one-vs-all strategy. </p>
+<center> Example of extracted spatial-time interest points(STIP). </center>
+<center> The figure shows that STIP can capture movement part of human.</center>
+<p> We use trackelet feature[2]. The features are 256-dimensional spatial-time interest points(STIP) based on HOG and HOF(see report for detail). Since video's temporal and spatial properties vary between each other, the number of STIP extracted from each video also varies. The first thing is to project all the feature vector of different videos into same space. We clustering these spatial-temporal interest points to learn a dictionary. Then calculate histogram of projected points in a video as its feature vector. We use these feature vectors to train SVM classifier for each action. Prediction is made by one-vs-all strategy. </p>
 </div>
 
 <div class="content">
 <h2> Experiments </h2>
-
+<p> </p>
 </div>
 <!--
 <table class="contentblock">
