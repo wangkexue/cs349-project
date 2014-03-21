@@ -16,9 +16,9 @@ Since video's temporal and spatial properties vary between each other, the numbe
 
 Finally, we compute a video's feature vector by the following two steps: first assigning each feature point to its nearest vocabulary in the learned dictionary; then calculate the histogram of these visual words. We use these feature vectors to train SVM classifier for each action. Prediction is made by one-vs-all strategy. 
 \section{Experiments}
-The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). Each video is divided into 4 roughly equal segments, in our experiments we treat each video as an instance, so the dimension of one instance is $4\times 891 = 3564$. We trained SVM with different kernels and variables. As Table 1-4 shows linear SVM achieved the best accuracy 86.1\%. Second is RBF kernel SVM, which has 78\% accuracy. Then is Sigmoid kernel with 75\% accuracy. Polynomial kernel only get 72\% accuracy.
+The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). Each video is divided into 4 roughly equal segments, in our experiments we treat each video as an instance, so the dimension of one instance is $4\times 891 = 3564$. We trained SVM with different kernels and variables. The variables cost and gamma are seleted by 10-fold validation.  As Table 1-4 shows linear SVM achieved the best accuracy 86.1\%. Second is RBF kernel SVM, which has 78\% accuracy. Then is Sigmoid kernel with 75\% accuracy. Polynomial kernel only get 72\% accuracy. We also test c-SVC and nu-SVC (regularized support vector classification using one vs one scheme for prediction). The linear one-vs-one multiclass SVM classifier achieved 88.9\% accuracy on test set (see Table 5), but the other 3 kernels performed not well (under 40\% accuracy, some of them classified all the instances into one class). That shows one-vs-all is more robust than one-vs-one in multiple class classification.
 \section{Conclusion and Discussion}
-The result, which linear SVM outperforms other more complicated classifier, shows that good feature is very important in classification. Good feature and simple classifier sometimes can attain suprisingly good performance. From Table 1-4 we can also observe that handclapping and handwaving is get the highest recall, and handclapping has most false positive detected.
+The result, which linear SVM outperforms other more complicated classifier, shows that good feature is very important in classification. Good feature and simple classifier sometimes can attain suprisingly good performance. From Table 1-4 we can also observe that handclapping and handwaving is get the highest recall, and handclapping has most false positive detected. 
 
 \begin{table}[b]
 \caption{Confusion matrix of SVM with RBF kernel (78\% accuracy)}
@@ -76,6 +76,21 @@ handwaving&0& 1& 11&0 &0 &0 \\
 jogging&0& 1& 0&7 &4 &0 \\
 running&0& 1&0&2 &9 &0 \\
 walking&0&1 &0 &0 &0 &11 \\ \hline
+\end{tabular}
+\end{center}
+\end{table} 
+
+\begin{table}[bh]
+\caption{Confusion matrix of C-SVC (88.9\% accuracy)}
+\begin{center}
+\begin{tabular}{c|cccccc}\hline
+&boxing&handclapping &handwaving &jogging &running &walking\\ \hline
+boxing&10& 2& 0& 0& 0& 0\\
+handclapping&0& 12& 0& 0& 0& 0\\
+handwaving&0& 1& 11&0 &0 &0 \\
+jogging&1& 0& 0&11 &0 &0 \\
+running&1& 0&0 &1 &10 &0 \\
+walking&1&0 &0 &1 &0 &10 \\ \hline
 \end{tabular}
 \end{center}
 \end{table} 
