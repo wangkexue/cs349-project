@@ -10,9 +10,15 @@
 \author{Zhiyuan Wang, Haodong Wang and Xi Zheng}
 \maketitle
 \section{Method}
-We use trackelet feature[2]. The features are 256-dimensional spatial-time interest points(STIP) based on HOG and HOF(see report for detail). Since video's temporal and spatial properties vary between each other, the number of STIP extracted from each video also varies. The first thing is to project all the feature vector of different videos into same space. We clustering these spatial-temporal interest points to learn a dictionary (finally get 891 vocabularies or bases). Then calculate histogram of projected points in a video as its feature vector. We use these feature vectors to train SVM classifier for each action. Prediction is made by one-vs-all strategy. 
+We use tracklet feature for human action detection. The feature is 256-dimensional spatial-time interest points(STIP) based on HOG and HOF. HOG is short for histograms of oriented gradient which is an discrimitive and robust image descriptor and HOF is histograms of optical flow which is a motion descriptor.  Tracklet
+
+Since video's temporal and spatial properties vary between each other, the number of STIP extracted from each video also varies. The first thing is to project all the feature vector of different videos into same space. We clustering these spatial-temporal interest points to learn a dictionary (it has 891 dimension or vocabulary). 
+
+Finally, we compute a video's feature vector by the following two steps: first assigning each feature point to its nearest vocabulary in the learned dictionary; then calculate the histogram of these visual words. We use these feature vectors to train SVM classifier for each action. Prediction is made by one-vs-all strategy. 
 \section{Experiments}
-The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). We trained SVM with different kernels and variables, and linear model achieved the best performance, 86.1\% accuracy on test set. Below is the confusion matrix. That shows good features' importance in classification, even simple classifier like linear SVM can work well with them. 
+The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). Each video is divided into 4 roughly equal segments, in our experiments we treat each video as an instance, so the dimension of one instance is $4\times 891 = 3564$. We trained SVM with different kernels and variables. As Table 1-4 shows linear SVM achieved the best accuracy 86.1\%.
+\section{Conclusion and Discussion}
+The result, which linear SVM outperforms other more complicated classifier, shows that good feature is very important in classification.
 \begin{table}
 \caption{Confusion matrix of SVM with RBF kernel (78\% accuracy)}
 \begin{center}
@@ -72,6 +78,5 @@ walking&0&1 &0 &0 &0 &11 \\ \hline
 \end{tabular}
 \end{center}
 \end{table} 
-\section{Conclusion and Discussion}
 
 \end{document}
