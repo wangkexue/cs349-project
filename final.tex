@@ -12,14 +12,15 @@
 \section{Method}
 We use tracklet feature for human action detection. The feature is 256-dimensional spatial-time interest points(STIP) based on HOG and HOF. HOG is short for histograms of oriented gradient which is an discrimitive and robust image descriptor and HOF is histograms of optical flow which is a motion descriptor.  Tracklet
 
-Since video's temporal and spatial properties vary between each other, the number of STIP extracted from each video also varies. The first thing is to project all the feature vector of different videos into same space. We clustering these spatial-temporal interest points to learn a dictionary (it has 891 dimension or vocabulary). 
+Since video's temporal and spatial properties vary between each other, the number of STIP extracted from each video also varies. The first thing is to project all the feature vector of different videos into same space. We clustering these spatial-temporal interest points to learn a dictionary (Here "dictionary" can also be called as codebook or bag of features. It has 891 dimension or vocabulary). 
 
 Finally, we compute a video's feature vector by the following two steps: first assigning each feature point to its nearest vocabulary in the learned dictionary; then calculate the histogram of these visual words. We use these feature vectors to train SVM classifier for each action. Prediction is made by one-vs-all strategy. 
 \section{Experiments}
-The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). Each video is divided into 4 roughly equal segments, in our experiments we treat each video as an instance, so the dimension of one instance is $4\times 891 = 3564$. We trained SVM with different kernels and variables. As Table 1-4 shows linear SVM achieved the best accuracy 86.1\%.
+The experiments are done on KTH action dataset, which contains 6 classes of actions with almost 100 videos for each class. We totally use 72 videos for training and 72 videos for test, the number of videos for different class is similar (11 to 12). Each video is divided into 4 roughly equal segments, in our experiments we treat each video as an instance, so the dimension of one instance is $4\times 891 = 3564$. We trained SVM with different kernels and variables. As Table 1-4 shows linear SVM achieved the best accuracy 86.1\%. Second is RBF kernel SVM, which has 78\% accuracy. Then is Sigmoid kernel with 75\% accuracy. Polynomial kernel only get 72\% accuracy.
 \section{Conclusion and Discussion}
-The result, which linear SVM outperforms other more complicated classifier, shows that good feature is very important in classification.
-\begin{table}
+The result, which linear SVM outperforms other more complicated classifier, shows that good feature is very important in classification. Good feature and simple classifier sometimes can attain suprisingly good performance. From Table 1-4 we can also observe that handclapping and handwaving is get the highest recall, and handclapping has most false positive detected.
+
+\begin{table}[b]
 \caption{Confusion matrix of SVM with RBF kernel (78\% accuracy)}
 \begin{center}
 \begin{tabular}{c|cccccc}\hline
@@ -34,7 +35,7 @@ walking&0&1 &0 &0 &0 &11 \\ \hline
 \end{center}
 \end{table} 
 
-\begin{table}
+\begin{table}[bh]
 \caption{Confusion matrix of linear SVM (86.1\% accuracy)}
 \begin{center}
 \begin{tabular}{c|cccccc}\hline
@@ -49,7 +50,7 @@ walking&1&0 &0 &0 &0 &11 \\ \hline
 \end{center}
 \end{table} 
 
-\begin{table}
+\begin{table}[bh]
 \caption{Confusion matrix of SVM with polynomial kernel(72.2\% accuracy)}
 \begin{center}
 \begin{tabular}{c|cccccc}\hline
@@ -64,7 +65,7 @@ walking&0&2 &0 &0 &0 &10 \\ \hline
 \end{center}
 \end{table} 
 
-\begin{table}
+\begin{table}[bh]
 \caption{Confusion matrix of SVM with sigmoid kernel(75\% accuracy)}
 \begin{center}
 \begin{tabular}{c|cccccc}\hline

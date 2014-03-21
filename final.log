@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 MAR 2014 03:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 MAR 2014 05:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -166,51 +166,57 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 11.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 11.
+
+Overfull \hbox (8.24135pt too wide) in paragraph at lines 13--14
+\OT1/cmr/m/n/10 We use track-let fea-ture for hu-man ac-tion de-tec-tion. The f
+ea-ture is 256-dimensional
+ []
+
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 19.
-
-Overfull \hbox (35.41751pt too wide) in paragraph at lines 19--28
- [] 
- []
-
-
-Overfull \hbox (35.41751pt too wide) in paragraph at lines 34--43
- [] 
- []
-
-
-Overfull \hbox (35.41751pt too wide) in paragraph at lines 49--58
- [] 
- []
-
-
-Overfull \hbox (35.41751pt too wide) in paragraph at lines 64--73
- [] 
- []
-
 [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (35.41751pt too wide) in paragraph at lines 26--35
+ [] 
+ []
+
+
+Overfull \hbox (35.41751pt too wide) in paragraph at lines 41--50
+ [] 
+ []
+
+
+Overfull \hbox (35.41751pt too wide) in paragraph at lines 56--65
+ [] 
+ []
+
+
+Overfull \hbox (35.41751pt too wide) in paragraph at lines 71--80
+ [] 
+ []
+
 [2] [3] (./final.aux) ) 
 Here is how much of TeX's memory you used:
  2674 strings out of 493315
  42299 string characters out of 6137904
- 110551 words of memory out of 5000000
+ 107551 words of memory out of 5000000
  6127 multiletter control sequences out of 15000+600000
  7280 words of font info for 26 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,8n,38p,681b,262s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,7n,38p,696b,258s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr17.pfb>
-Output written on final.pdf (3 pages, 58709 bytes).
+ts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb>
+Output written on final.pdf (3 pages, 67778 bytes).
 PDF statistics:
- 30 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 34 PDF objects out of 1000 (max. 8388607)
+ 23 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
