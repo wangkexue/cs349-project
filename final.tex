@@ -20,7 +20,7 @@ The experiments are done on KTH action dataset, which contains 6 classes of acti
 
 We also test c-SVC and nu-SVC (regularized support vector classification using one vs one scheme for prediction). The linear one-vs-one multiclass SVM classifier achieved 88.9\% accuracy on test set (see Table 5), but the other 3 kernels performed not well (under 40\% accuracy, some of them even classified all the instances into one class). That shows one-vs-all is more robust than one-vs-one in multiple class classification.
 \section{Conclusion and Discussion}
-The result, which linear SVM outperforms other more complicated classifier, shows that good feature is very important in classification. Discrimitive feature and simple classifier sometimes can attain suprisingly good performance. From Table 1-4 we can also observe that handclapping and handwaving is get the highest recall, and handclapping has most false positive detected. 
+The result, which linear SVM outperforms other more complicated classifier, shows that good feature is very important in classification. Discrimitive feature and simple classifier sometimes can attain suprisingly good performance. Intuitively our relatively small dataset, the way actions in video performed is similar, and we use the whole video rather than a smaller segment as instance, may also be a reason. From Table 1-4 we can also observe that handclapping and handwaving is get the highest recall, and handclapping has most false positive detected. 
 
 \begin{table}[hb]
 \caption{Confusion matrix of SVM with RBF kernel (78\% accuracy)}
