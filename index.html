@@ -163,13 +163,7 @@ h1
 	<script>
 	  $(document).ready(function(){
 	  var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-	  if (width < 900)
-	  {
-		$(".main").tiltedpage_scroll({
-			angle: 0
-		});
-	  }
-	  else
+	  if (width > 950)
 	  {
 		$(".main").tiltedpage_scroll({
 			angle: 20
