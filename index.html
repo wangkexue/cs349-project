@@ -38,7 +38,7 @@ body
 .content
 {
 	float: center;
-	width: 80%;
+	width: 60%;
 	top: 0px;
 	bottom: 0px;
 	left: 0px;
@@ -162,9 +162,19 @@ h1
 </style>
 	<script>
 	  $(document).ready(function(){
-      $(".main").tiltedpage_scroll({
-        angle: 20
-      });
+	  var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+	  if (width < 900)
+	  {
+		$(".main").tiltedpage_scroll({
+			angle: 0
+		});
+	  }
+	  else
+	  {
+		$(".main").tiltedpage_scroll({
+			angle: 20
+		});
+	   }
 		});
 		
 	  </script>
