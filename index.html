@@ -35,31 +35,6 @@ body
 	overflow: hidden;
 }
 
-@media all and (max-width: 1000px) {
-.content
-{
-	float: center;
-	width: 60%;
-	top: 0px;
-	bottom: 0px;
-	left: 0px;
-	right: 0px;
-	min-width: 650px;
-	zoom: 80%;
-	/*overflow:auto;*/
-	max-height:630px;
-	max-width: 1024px;
-    padding : 25px 50px;
-    margin : 25px auto 300px;
-    background-color : #fff;
-    box-shadow: 0px 0px 10px #999;
-    border-radius: 15px;
-    position: relative;
-}
-}
-
-
-@media all and (min-width: 1001px) {
 .content
 {
 	float: center;
@@ -80,6 +55,17 @@ body
     border-radius: 15px;
     position: relative;
 }
+
+@media all and (max-width: 980px) and (min-width: 741px) {
+html{
+	zoom: 80%;
+	}
+}
+
+@media all and (max-width: 740px) {
+html{
+	zoom: 60%;
+	}
 }
 
 a, a:visited
